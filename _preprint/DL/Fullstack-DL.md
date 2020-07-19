@@ -2,13 +2,21 @@
 
 ## 	a. Overview:
 
-- ML is still research, therefore it is very challenging to aim for 100% success rate.
+- ML is still research, therefore it is very challenging to aim for 100% success rate. 
+
+  Ngay cả đối với con người việc đưa ra những dự đoán đúng 100% cũng rất khó vì có nhiều yếu tố chi phối chẳng hạn với những ứng dụng phân loại ảnh, khi ảnh quá mờ con người cũng ko phân biệt được.
 
 - Many ML projects are technically infeasible or poorly scoped.
 
+  ML hiện tại không quá thần thánh, không phải bất kỳ vấn đề nào cũng được giải quyết bởi ML. Bên cạnh đó việc tham lam giải những bài toán quá lớn mặc dù từng bài toán con riêng biệt trong đó có thể giải quyết được cũng khiến cho dự án không khả thi với nguồn tài nguyên hiện có (con người, máy móc, dữ liệu,...)
+
 - Many ML projects never make the leap into production.
 
+  Có rất nhiều dự án không thể đơn giản ứng dụng thẳng vào thực tế vì trên thực tế có nhiều yếu tố ảnh hưởng như "dễ bị hack", data thực tế "messy" hơn rất nhiều so với nghiên cứu (xe tự lái khó áp dụng tại VN)
+
 - Many ML projects have unclear success criteria.
+
+  Các dự án không có tiêu chí đánh giá rõ ràng.
 
 - Many ML projects are poorly managed.
 
@@ -456,12 +464,12 @@
 
 # 7. Research Areas
 
-## Few-Shot Learning
+## a. Few-Shot Learning
 
 - **Model-Agnostic Meta-Learning** is an end-to-end learning paradigm of a parameter vector that is a good initialization for fine-tuning many tasks.
 - It works well for classification problems, optimization tasks, and generative models.
 
-## Reinforcement Learning
+## b. Reinforcement Learning
 
 - Compared to supervised learning, reinforcement learning has additional challenges in terms of **credit assignment, stability,** and **exploration**.
 - Success stories of reinforcement learning are predominantly in the domains of **game-playing** and **robotics**.
@@ -470,43 +478,43 @@
 - **Contextual Bandits** is basically a simpler version of reinforcement learning with no states.
 - In **the real world**, reinforcement learning works well whenever we have a great simulator/demonstration of the environment and an inexpensive data collection process.
 
-## Imitation Learning
+## c. Imitation Learning
 
 - In the **imitation learning** paradigm, we collect many demonstrations and turn them into a policy that can interact with the environment.
 - **One-Shot Imitation Learning** only needs a single demonstration of a new task to figure out the next action.
 - In **the real world,** imitation learning works well whenever we have access to previous data and it's easy to predict what happens next.
 
-## Domain Randomization
+## d. Domain Randomization
 
 - The motivation here is **how can we learn useful real-world skills in the simulator?**
 - **Domain randomization** operates under the assumption that if the model sees enough simulated variation, the real world may look like just the next simulator.
 - A well-known example is the **OpenAI's robot hand** that solves the Rubik Cube.
 
-## Architecture Search
+## e. Architecture Search
 
 - The idea behind **architecture search** is to use search algorithms to determine the optimal architecture for our neural networks.
 - We can use reinforcement learning to perform this search process.
 - Small architectures sometimes match the performance of the bigger architectures.
 - Furthermore, we can use reinforcement learning to design the right **data augmentation** scheme to maximize performance.
 
-## Unsupervised Learning
+## f. Unsupervised Learning
 
 - **Unsupervised learning** deals with unlabeled data. We can learn the network that embeds the data or learn the weights of the network architecture.
 - The main families of models include Variational Autoencoders, Generative Adversarial Networks, Exact Likelihood Models, and "puzzles" ones.
 - **Contrastive Predictive Coding** is an unsupervised learning scheme that breaks up the input into pieces, removes specific pieces, and asks the network to fill those pieces back in the final output.
 - A well-known example is the **OpenAI's GPT-2 system** that can generate text.
 
-## Overall Research Theme
+## g. Overall Research Theme
 
 - Researchers use more computing power to get better results.
 - You should focus on problem territory with a lot of **data** and **compute** than human ingenuity.
 
-## Bridge The Research and Real-World Gap
+## h. Bridge The Research and Real-World Gap
 
 - **Research** is about going from 0 to 1.
 - In **real-world** applications, often 90% performance is not enough.
 
-## How To Keep Up
+## i. How To Keep Up
 
 - Learn to read academic papers.
 - Helpful resources to get papers are Import AI newsletter, Arxiv Sanity, Twitter, Facebook Groups, and ML Subreddit.

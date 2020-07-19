@@ -15,7 +15,7 @@ Vietnamese:  mảnh_mai, mảnh_dẻ, mảnh_khảnh
 
 ## 2. Model:
 
-- General model:
+- ### General model:
 
   - **Skip-gram**: (Given word, predict context)
 
@@ -84,34 +84,81 @@ Vietnamese:  mảnh_mai, mảnh_dẻ, mảnh_khảnh
     \sum^{T}_{t=1} \left[ \sum_{c \in C_t}ℓ(s(w_t, w_c)) + \sum_{n \in N_{t,c}} ℓ(-s(w_t, n))   \right]
   $$
 
-  - Hàm tính score $s$ ở đây là tích vô hướng. Trong đó word tại vị trí $t$ trong corpus $w_t$ được biểu diễn bằng vector input (embedding của original word) còn $w_c$ (context của $w_t$) được biểu diễn bởi vector output (embedding của context word). Để hiểu hơn về embedding của original word (input embedding) và embedding của context word (output embedding) ta nên xem paper của 
+  - Hàm tính score $s$ ở đây là tích vô hướng. Trong đó word tại vị trí $t$ trong corpus $w_t$ được biểu diễn bằng vector input $u_w$ (embedding của original word) còn $w_c$ (context của $w_t$) được biểu diễn bởi vector output $v_c$ (embedding của context word). 
+  $$
+    s(w_t, w_c) = u_{w_t}^T v_{w_c}
+  $$
+  
+  
+  - Để hiểu hơn về embedding của original word (input embedding) và embedding của context word (output embedding) ta nên xem paper của 
 
     [word2vec]: https://arxiv.org/pdf/1301.3781.pdf
 
+- ### Subword model:
+
+  - Những mô hình trên sử dụng embedding ở mức word, do đó chúng bỏ qua những thông tin nằm chính trong cấu trúc của từ đó. Chẳng hạn trong từ l-o-v-e-r nội dung của phần l-o-v-e có ý nghĩa giống như trong những từ l-o-v-e-l-y, hay phần l-o-v có ý nghĩa giống như trong từ l-o-v-i-n-g. Vì vậy trong bài báo, có đề cập đến một score function $s$ khác, trong đó hàm này sẽ quan tâm tới những thông tin trên (subword information).
+
+  - "where" với 3-gram:
+
+    - character 3-gram: "<wh", "whe", "her", "ere", "re>"
+    - word: "<where\>"
+
+  - Thực tế tác giả sử dụng tất cả n-gram từ 3->6 cùng lúc
+
+  - tập n-gram của word $w$ : $G_w$ 
+
+  - score function: 
+
     
+    $$
+    s(w, c) = \sum_{g \in G_w} z_g^Tv_c
+    $$
+    trong đó $z_g$ là biểu diễn n-gram của $w$ 
 
-  - ádasd
+## 3. Training:
 
--  Subword model:
-
-## 3. Experiment setup:
-
-- Baseline:
 - Optimization:
+
+  - **Optimizer**: Stochastic Gradient Descent
+
+  - **loss**: negative log likelihood
+
+  - **learning rate**: linear decay of step side
+
+    - n_examples = T
+
+    - n_epoch = P
+
+    - step = $t$
+
+    - $lr = \gamma_0 (1 - \frac{t}{TP}) $
+
+      step $t$ tính theo $batch\_size = 1$ nên với $batch\_size > 1$ có thể coi $step = t * batch\_size$ (số data example đã được duyệt qua)
+      
+      Skip-gram: $\gamma_0 = 0.025$
+      
+      Cbow: $\gamma_0 = 0.05$
+      
+      Subword model: $\gamma_0 = 0.05$
+
 - Implementation details:
+
+  - word vector dimension size = 300
+  - 1 positive example => sample 5 negative example
+
 - Datasets:
 
-## 4. Results:
+  - using context window $c$ => sampling from $c \in [1,5]$ 
+  
+  - Loại bỏ các từ với xác suất như sau:
+  
+    $$P(w_i) = 1 - \sqrt{\frac{t}{f(w_i)}} $$  
+  
+    Trong đó:
+  
+    - $f(w_i)$ là tần suất xuất hiện của word $w_i$ 
+    - $t=10^{-4}$ là ngưỡng ta chọn trước 
 
-- Human similarity judgement:
-- Word analogy task:
-- Comparison with morphological representation:
-- Effect of the size of the training data:
-- Effect of the size of n-gram:
-- Language modeling:
+## 4. Word similarity for OOV words:
 
-## 5. Qualitative Analysis:
-
-- Nearest Neighbors
-- Character n-grams and morphemes
-- Word similarity for OOV words
+- Vì các từ được cấu thành từ subword nên ngay cả khi từ mới không nằm trong từ điển, ta vẫn có thể biểu diễn những từ này một cách đơn giản với trung bình tất cả các n-gram vector của chúng.
